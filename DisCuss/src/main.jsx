@@ -24,7 +24,7 @@ import Blogdetail from './components/Blog/Blogdetail.jsx'
 import Blogbycategory from "./components/Blog/Blogbycategory.jsx"
 import Searchresult from './components/Searchresult.jsx'
 import Commentdetail from './components/Commentdetail.jsx'
-import User from './components/user.jsx'
+import User from './components/User.jsx'
 import Authrouteprotection from './components/Authrouteprotection.jsx'
 import Authrouteprotectiononlyadmin from './components/Authrouteprotectiononlyadmin.jsx'
 // import Editcategory from './components/Category/Editcategory.jsx'
