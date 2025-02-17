@@ -8,7 +8,7 @@ import { LuLogOut } from "react-icons/lu";
 import { showToast } from "../helper/showToast";
 import { TbCategory } from "react-icons/tb";
 import { IoIosPeople } from "react-icons/io";
-import Loginbtn from "./Ui/loginbtn";
+import Loginbtn from "./Ui/Loginbtn";
 import { FaComments } from "react-icons/fa6";
 import Logobtn from "./Ui/Logobtn";
 
