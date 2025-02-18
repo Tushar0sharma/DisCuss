@@ -1,5 +1,5 @@
 #root {
-  max-width: 1280px;
+  max-width: 100%;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
@@ -26,6 +26,13 @@
     transform: rotate(360deg);
   }
 }
+/* @supports (-webkit-touch-callout: none) {
+  body {
+      width: 100vw;
+      min-width: 100%;
+  }
+} */
+
 
 @media (prefers-reduced-motion: no-preference) {
   a:nth-of-type(2) .logo {

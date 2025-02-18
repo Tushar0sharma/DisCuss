@@ -7,7 +7,7 @@ import { Particles } from '../components/Magicui/Particles';
 
 const Homepage = () => {
   return (
-    <div className="relative  lg:pl-20 mt-24  flex flex-col gap-4 min-h-screen bg-black text-white">
+    <div className="relative overflow-hidden  mt-24  flex flex-col gap-4 min-h-screen bg-black text-white">
       {/* Particles that cover the whole homepage */}
       <Particles
         className="absolute top-0 left-0 w-full h-full z-0"

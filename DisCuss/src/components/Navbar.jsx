@@ -17,30 +17,35 @@ const Navbar = () => {
 
   return (
     <nav   className="w-full rounded-3xl border-b-2 z-50 bg-black fixed top-0 left-0 right-0   text-white">
-      <div className="flex items-center justify-between px-6 md:px-10 lg:px-16 xl:px-32 h-16 md:h-20">
+      <div className="flex items-center justify-between lg:px-14 px-5  h-16 md:h-20">
         <Link to="/">
           <Logobtn/>
+          {/* logo */}
         </Link>
         {/* Mobile Version */}
         <div className="md:hidden">
           {!isLoggedin ? (
             <Link to="/login">
-              <button className="py-2 px-4 rounded-full bg-white text-violet-800 font-semibold shadow hover:bg-gray-300 transition">
+              <button className="py-2 px-4 rounded-full  text-violet-800 font-semibold shadow hover:bg-gray-300 transition">
                 <Loginbtn />
+                {/* hi */}
               </button>
             </Link>
           ) : (
-            <UserDropdown />
+             <UserDropdown />
+            // <button>i</button>
           )}
         </div>
         {/* Desktop Version */}
-        <div className="hidden md:flex items-center gap-6 font-medium">
+        <div className="hidden md:flex items-center  font-medium">
           {!isLoggedin ? (
             <Link to="/login">
               <Loginbtn />
+              {/* hi */}
             </Link>
           ) : (
-            <UserDropdown />
+             <UserDropdown />
+            // <bytton>hi</bytton>
           )}
         </div>
       </div>
