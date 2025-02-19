@@ -1,14 +1,33 @@
-import {React} from 'react';
+import {React, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import Maincategory from '../components/Maincategory';
 import Postlist from './Postlist';
 import Meteors from '../components/Magicui/Meteors';
 import { Particles } from '../components/Magicui/Particles';
 import { useState } from 'react';
+import Backtotop from '../components/Ui/Backtotop';
 
 
 const Homepage = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [showbtn,setshowbtn]=useState(false)
+
+  const scrolltotop=()=>{
+    window.scrollTo({top:0,behavior:"smooth"})
+  }
+
+  useEffect(()=>{
+    const handlescroll=()=>{
+        if(window.scrollY>300){
+          setshowbtn(true)
+        }
+        else{
+          setshowbtn(false)
+        }
+    }
+    window.addEventListener("scroll",handlescroll)
+    return ()=>window.removeEventListener("scroll",handlescroll)
+  });
 
   // Called when a category is clicked in Maincategory.
   const handleCategorySelect = (categorySlug) => {
@@ -23,6 +42,13 @@ const Homepage = () => {
         ease={80}
         refresh
       />
+
+      {
+        showbtn && 
+        <div onClick={scrolltotop} style={{ position: 'fixed', bottom: '20px', right: '30px', }} className="z-50">
+            <Backtotop/>
+        </div>
+      }
 
       {/* Breadcrumbs and Meteors */}
       <Meteors number={10} />

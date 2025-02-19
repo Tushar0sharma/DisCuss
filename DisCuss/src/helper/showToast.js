@@ -2,9 +2,9 @@ import { toast as notify } from "react-toastify"; // Renaming to avoid conflict
 
 export const showToast = (type, message) => {
 
-  if (typeof window !== "undefined" && window.innerWidth < 480) {
-    return; // Do not display the toast on mobile
-  }
+  // if (typeof window !== "undefined" && window.innerWidth < 480) {
+  //   return; // Do not display the toast on mobile
+  // }
   const config = {
     position: "top-right",
     autoClose: 5000,
