@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FcLikePlaceholder } from "react-icons/fc";
-import { FcLike } from "react-icons/fc";
+import { FcLikePlaceholder, FcLike } from "react-icons/fc";
 import { useSelector } from "react-redux";
 import { showToast } from "../helper/showToast";
 
@@ -9,6 +8,7 @@ const Likecount = ({ blogid }) => {
   const [countData, setCountData] = useState(0);
   const [liked, setLiked] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [isUpdating, setIsUpdating] = useState(false);
   const [error, setError] = useState(null);
 
   // Fetch like count & check if the logged-in user has liked the post
@@ -27,7 +27,6 @@ const Likecount = ({ blogid }) => {
         const data = await response.json();
         
         setCountData(data?.likecount ?? 0);
-        // Use the isuserlike flag from the server
         setLiked(data?.isuserlike || false);
       } catch (error) {
         setError("Error while fetching like data");
@@ -44,6 +43,9 @@ const Likecount = ({ blogid }) => {
     if (!user.isLoggedin) {
       return showToast("error", "Please log in to like posts");
     }
+    if (isUpdating) return;
+
+    setIsUpdating(true);
 
     try {
       const response = await fetch(
@@ -63,11 +65,12 @@ const Likecount = ({ blogid }) => {
 
       const resData = await response.json();
       setCountData(resData.likecount);
-      // Use the returned isuserlike flag to update the state
       setLiked(resData.isuserlike);
     } catch (error) {
       console.error("Error toggling like:", error);
       showToast("error", "Something went wrong!");
+    } finally {
+      setIsUpdating(false);
     }
   };
 
@@ -76,8 +79,9 @@ const Likecount = ({ blogid }) => {
   return (
     <button
       onClick={handleClick}
+      disabled={isUpdating}
       type="button"
-      className="flex text-white items-center gap-1"
+      className={`flex text-white items-center gap-1 ${isUpdating ? "opacity-50 " : ""}`}
     >
       {liked ? <FcLike size={29} /> : <FcLikePlaceholder size={29} />}
       {loading ? 0 : countData}

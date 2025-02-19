@@ -1,23 +1,32 @@
-import React, { useEffect, useState } from "react";
-import Postlistitem from "../components/Postlistitem"; // Each item’s card
+// Postlist.jsx
+import React, { useState, useEffect } from "react";
+import Postlistitem from "../components/Postlistitem";
 import { Particles } from "../components/Magicui/Particles";
+import Loading from "../components/Loading";
 
-const Postlist = () => {
+const Postlist = ({ category }) => {
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Fetch blogs on mount
+  // Fetch blogs whenever the selected category changes.
   useEffect(() => {
     const fetchBlogs = async () => {
+      setLoading(true);
       try {
-        const response = await fetch(
-          `${import.meta.env.VITE_API_BASE_URL}/blog/get-all`,
-          { method: "GET", credentials: "include" }
-        );
+        let url;
+        if (category) {
+          // Fetch blogs for the selected category
+          url = `${import.meta.env.VITE_API_BASE_URL}/blog/get-blog-by-category/${category}`;
+        } else {
+          // Fetch all blogs
+          url = `${import.meta.env.VITE_API_BASE_URL}/blog/get-all`;
+        }
+        const response = await fetch(url, { method: "GET", credentials: "include" });
         const data = await response.json();
 
         if (data.success) {
+          // Adjust according to your API response shape.
           setBlogs(data.blogs || data.blog);
         } else {
           setError("Failed to load blogs");
@@ -30,29 +39,25 @@ const Postlist = () => {
     };
 
     fetchBlogs();
-  }, []);
+  }, [category]);
 
-  // Show loading or error
-  if (loading) return <div>Loading...</div>;
+  if (loading)
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <Loading />
+      </div>
+    );
   if (error) return <div className="text-red-600">{error}</div>;
 
-  // Return something for each blog
   return (
-    <div className="container mx-auto px-4 py-8">
-      {/* 
-        columns-1  -> 1 column on very small screens
-        sm:columns-2 -> 2 columns at ≥640px
-        md:columns-3 -> 3 columns at ≥768px
-        lg:columns-4 -> 4 columns at ≥1024px
-        gap-4      -> space between columns
-      */}
-       <Particles
-              className="absolute top-0 left-0 w-full h-full z-0"
-              quantity={100}
-              ease={80}
-              refresh
-            />
-      <div className="columns-1 sm:columns-2 md:columns-2 lg:columns-3 gap-4">
+    <div className="container mx-auto px-4 py-8 relative">
+      <Particles
+        className="absolute top-0 left-0 w-full h-full z-0"
+        quantity={100}
+        ease={80}
+        refresh
+      />
+      <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4">
         {blogs.map((blog) => (
           <div key={blog._id} className="mb-4 break-inside-avoid">
             <Postlistitem post={blog} />
@@ -61,7 +66,6 @@ const Postlist = () => {
       </div>
     </div>
   );
-  
 };
 
 export default Postlist;

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { MdDelete } from "react-icons/md";
+import Loading from "./Loading";
 
 
 const User = () => {
@@ -66,7 +67,7 @@ const User = () => {
       </div>
 
       {/* Loading state */}
-      {loading && <p>Loading users...</p>}
+      {loading && <div className="flex min-h-screen items-center justify-center"><Loading/></div>}
       {error && <p className="text-red-500">{error}</p>}
 
       {/* users Table */}

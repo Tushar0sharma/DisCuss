@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const Logobtn = () => {
+  const [isActive, setIsActive] = useState(false);
+
+  const handleClick = () => {
+    setIsActive((prev) => !prev);
+  };
+
   return (
-    <StyledWrapper>
-      <div className="button" data-text="Awesome">
+    <StyledWrapper onClick={handleClick}>
+      <div className={`button ${isActive ? 'active' : ''}`} data-text="Awesome">
         <span className="actual-text">&nbsp;DisCuss&nbsp;</span>
         <span aria-hidden="true" className="hover-text">&nbsp;DisCuss&nbsp;</span>
       </div>
@@ -13,7 +19,7 @@ const Logobtn = () => {
 }
 
 const StyledWrapper = styled.div`
-  /* === removing default button style ===*/
+  /* Remove default button styling */
   .button {
     margin: 0;
     height: auto;
@@ -21,10 +27,6 @@ const StyledWrapper = styled.div`
     padding: 0;
     border: none;
     cursor: pointer;
-  }
-
-  /* button styling */
-  .button {
     --border-right: 6px;
     --text-stroke-color: rgba(255,255,255,0.6);
     --animation-color: #37FF8B;
@@ -32,13 +34,13 @@ const StyledWrapper = styled.div`
     letter-spacing: 3px;
     text-decoration: none;
     font-size: var(--fs-size);
-    font-family: "Arial";
+    font-family: "Arial", sans-serif;
     position: relative;
     text-transform: uppercase;
     color: transparent;
     -webkit-text-stroke: 1px var(--text-stroke-color);
   }
-  /* this is the text, when you hover on button */
+
   .hover-text {
     position: absolute;
     box-sizing: border-box;
@@ -51,10 +53,27 @@ const StyledWrapper = styled.div`
     transition: 0.5s;
     -webkit-text-stroke: 1px var(--animation-color);
   }
-  /* hover */
-  .button:hover .hover-text {
+
+  /* Apply hover effect when active class is present */
+  .button.active .hover-text {
     width: 100%;
-    filter: drop-shadow(0 0 23px var(--animation-color))
-  }`;
+    filter: drop-shadow(0 0 23px var(--animation-color));
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .button {
+      --fs-size: 1.5em;
+      letter-spacing: 2px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .button {
+      --fs-size: 1.2em;
+      letter-spacing: 1px;
+    }
+  }
+`;
 
 export default Logobtn;

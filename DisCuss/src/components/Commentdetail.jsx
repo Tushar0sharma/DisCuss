@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { MdDelete } from "react-icons/md";
 import { useSelector } from "react-redux";
+import Loading from "./Loading";
 
 const Commentdetail = () => {
   const navigate = useNavigate(); // Hook for navigation
@@ -48,7 +49,7 @@ const Commentdetail = () => {
     try {
       const response = await fetch(
         `${import.meta.env.VITE_API_BASE_URL}/comment/delete/${commentId}`,
-        { method: "DELETE" }
+        { method: "DELETE" ,credentials:"include"}
       );
 
       const data = await response.json();
@@ -73,7 +74,7 @@ const Commentdetail = () => {
       </div>
 
       {/* Loading state */}
-      {loading && <p>Loading comments...</p>}
+      {loading && <div className=" flex  items-center justify-center"><Loading/></div>}
       {error && <p className="text-red-500">{error}</p>}
 
       {/* Comments Table */}

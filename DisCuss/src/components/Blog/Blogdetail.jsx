@@ -86,7 +86,7 @@ const Blogdetail = () => {
       </div>
 
       {loading ? (
-        <div className="flex justify-center items-center">
+        <div className="fle min-h-screen justify-center items-center">
           <Loading /> {/* A custom loading spinner component */}
         </div>
       ) : error ? (

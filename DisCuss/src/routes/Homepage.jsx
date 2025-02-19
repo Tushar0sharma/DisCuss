@@ -1,17 +1,25 @@
-import React from 'react';
+import {React} from 'react';
 import { Link } from 'react-router-dom';
 import Maincategory from '../components/Maincategory';
 import Postlist from './Postlist';
 import Meteors from '../components/Magicui/Meteors';
 import { Particles } from '../components/Magicui/Particles';
+import { useState } from 'react';
+
 
 const Homepage = () => {
+  const [selectedCategory, setSelectedCategory] = useState(null);
+
+  // Called when a category is clicked in Maincategory.
+  const handleCategorySelect = (categorySlug) => {
+    setSelectedCategory(categorySlug);
+  };
   return (
     <div className="relative overflow-hidden  mt-24  flex flex-col gap-4 min-h-screen bg-black text-white">
       {/* Particles that cover the whole homepage */}
       <Particles
         className="absolute top-0 left-0 w-full h-full z-0"
-        quantity={100}
+        quantity={200}
         ease={80}
         refresh
       />
@@ -88,8 +96,11 @@ const Homepage = () => {
       </div>
 
       {/* Categories & Post List */}
-      <Maincategory />
-      <Postlist />
+      <Maincategory 
+        onCategorySelect={handleCategorySelect} 
+        selectedCategory={selectedCategory} 
+      />
+      <Postlist category={selectedCategory} />
     </div>
   );
 };

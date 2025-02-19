@@ -66,7 +66,14 @@ const Singlepostpage = () => {
     }
   }, [blog]);
 
-  if (loading) return <Loading />;
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen  ">
+        <Loading />
+      </div>
+    );
+  }
+  
   if (error) return <p className="text-center mt-10 text-red-500">{error}</p>;
   if (!blog) return <p className="text-center mt-10">No blog found.</p>;
 

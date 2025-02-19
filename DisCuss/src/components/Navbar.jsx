@@ -16,8 +16,8 @@ const Navbar = () => {
   const { user, isLoggedin } = useSelector((state) => state.user);
 
   return (
-    <nav   className="w-full rounded-3xl border-b-2 z-50 bg-black fixed top-0 left-0 right-0   text-white">
-      <div className="flex items-center justify-between lg:px-14 px-5  h-16 md:h-20">
+    <nav   className="w-full rounded-3xl border-b-2 z-50 backdrop-blur-lg fixed top-0 left-0 right-0   text-white">
+      <div className="flex items-center  justify-between lg:px-14 px-5  h-16 md:h-20">
         <Link to="/">
           <Logobtn/>
           {/* logo */}
@@ -26,7 +26,7 @@ const Navbar = () => {
         <div className="md:hidden">
           {!isLoggedin ? (
             <Link to="/login">
-              <button className="py-2 px-4 rounded-full  text-violet-800 font-semibold shadow hover:bg-gray-300 transition">
+              <button className="py-2 px-4 rounded-full  text-violet-800 font-semibold shadow  transition">
                 <Loginbtn />
                 {/* hi */}
               </button>
