@@ -36,9 +36,9 @@ const Homepage = () => {
       <div className="flex items-center gap-4 justify-between z-10 relative">
         {/* Title */}
         <div>
-          <h1 className="text-3xl md:text-5xl lg:text-6xl font-extrabold text-white drop-shadow-lg">
-            Welcome to DisCuss,
-          </h1>
+        <h1 className="text-5xl md:text-6xl lg:text-7xl font-bebas bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 bg-clip-text text-transparent drop-shadow-xl tracking-wide">
+          Let’s DisCuss,
+        </h1>
           <p className="mt-3 text-md md:text-xl text-gray-300">
             Your gateway to thought-provoking articles and expert insights.
             Explore trending topics, share your perspective, and connect with a

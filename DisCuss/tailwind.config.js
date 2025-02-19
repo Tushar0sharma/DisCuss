@@ -6,6 +6,9 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        'bebas': ['"Bebas Neue"', 'cursive']
+      },
       animation: {
         meteor: 'meteor 5s linear infinite',
       },
