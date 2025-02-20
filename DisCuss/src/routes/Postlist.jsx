@@ -50,7 +50,7 @@ const Postlist = ({ category }) => {
   if (error) return <div className="text-red-600">{error}</div>;
 
   return (
-    <div className="container mx-auto px-4 py-8 relative">
+    <div className="container mx-auto py-8 relative">
       <Particles
         className="absolute top-0 left-0 w-full h-full z-0"
         quantity={100}

@@ -33,7 +33,7 @@ const Postlistitem = ({ post }) => {
   };
 
   return (
-    <div style={{ backgroundColor: '#212121' }} className="bg-gray-900 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 w-full max-w-md">
+    <div style={{ backgroundColor: '#212121' }} className="bg-gray-900 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 w-full max-w-md sm:max-w-full">
       {/* User Info Section */}
       <div className="flex items-center px-4 py-3">
         <img
