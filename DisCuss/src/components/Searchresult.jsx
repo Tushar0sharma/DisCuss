@@ -53,7 +53,7 @@ const Searchresult = () => {
         <Maincategory />
       </div> */}
 
-      <div className="mx-auto h-32 mt-12 w-5/6 flex-row">
+      <div className="mx-auto h-32 mt-12 w-full flex-row">
 
       {loading && <Loading />}
       {!loading && error && (
@@ -64,7 +64,7 @@ const Searchresult = () => {
         </div>
 
 
-        <div className="container mx-auto px-4 py-8">
+        <div className="container mx-auto  py-8">
       {/* 
         columns-1  -> 1 column on very small screens
         sm:columns-2 -> 2 columns at ≥640px
