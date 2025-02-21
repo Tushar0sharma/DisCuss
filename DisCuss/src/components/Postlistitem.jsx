@@ -3,9 +3,11 @@ import { Link } from "react-router-dom";
 import DOMPurify from "dompurify";
 import Commentcount from './Commentcount.jsx';
 import Likecount from './Likecount.jsx';
+import { useNavigate } from "react-router-dom";
 import { FaShare } from "react-icons/fa";
 
 const Postlistitem = ({ post }) => {
+  const navigate=useNavigate();
   // Function to handle sharing
   const handleShare = async () => {
     const postUrl = `${window.location.origin}/blog/${post.category.name}/${post.slug}`;
@@ -80,7 +82,10 @@ const Postlistitem = ({ post }) => {
       <div className="flex items-center justify-between px-4 py-2 border-t border-gray-700">
         <div className="flex space-x-4 text-yellow-300">
           <Likecount blogid={post._id} />
+          <Link to={`/blog/${post.category.name}/${post.slug}`} className="flex items-center  pt-0.5">
           <Commentcount blogid={post._id} />
+
+          </Link>
           <button
             className="flex items-center text-blue-400 space-x-1 hover:text-green-600"
             onClick={handleShare}

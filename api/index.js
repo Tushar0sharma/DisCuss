@@ -38,6 +38,8 @@ app.listen(port,()=>{
     console.log("server is running on port ",port);
 })
 
+
+
 app.use((err,req,res,next)=>{
     const statusCode=err.statusCode||500
     const message=err.message||"Internal server error"

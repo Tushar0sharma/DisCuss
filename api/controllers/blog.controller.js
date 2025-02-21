@@ -76,10 +76,6 @@ export const updateblog=async (req,res)=>{
     try {
         const data = JSON.parse(req.body.data);
         const {blogid}=req.params
-
-        
-        
-
         const blog=await Blog.findById(blogid)
 
         blog.category=data.category
@@ -130,31 +126,110 @@ export const deleteblog = async (req, res) => {
     }
 };
 
-export const showallblog = async (req, res) => {
-    try {
-      const blogs = await Blog.find()
-        .populate("author", "name email avatar")     
-        .populate("category", "name")   
-        .sort({ createdAt: -1 })        
-        .lean();
-  
-      res.status(200).json({
-        success: true,
-        blogs,
-      });
-    } catch (error) {
-      console.error("Error in showallblog:", error);
-      res.status(500).json({
-        message: "Some Error Occured in showing all blogs",
-        error: error.message,
-      });
+export const getblogbycategory = async (req, res) => {
+  try {
+    const { slug } = req.params;
+    let page = parseInt(req.query.page) || 1;
+    let limit = parseInt(req.query.limit) || 10;
+
+    if (page < 1) page = 1;
+    if (limit < 1) limit = 10;
+
+    const skip = (page - 1) * limit;
+
+    // Find category by slug (case-insensitive)
+    const categorydata = await Category.findOne({ slug: new RegExp(`^${slug}$`, "i") });
+
+    if (!categorydata) {
+      return res.status(404).json({ success: false, message: "Category not found" });
     }
-  };
+
+    const categoryid = categorydata._id;
+
+    // Fetch filtered blogs
+    const blogs = await Blog.find({ category: categoryid })
+      .populate("author", "name avatar")
+      .populate("category", "name slug")
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit)
+      .lean();
+
+    // Correctly count total blogs for the given category
+    const totalBlogs = await Blog.countDocuments({ category: categoryid });
+
+    // Calculate total pages
+    const totalPages = Math.ceil(totalBlogs / limit);
+
+    res.status(200).json({
+      success: true,
+      blogs,
+      pagination: {
+        totalBlogs,
+        totalPages,
+        currentPage: page,
+        hasNextPage: page < totalPages,
+        hasPrevPage: page > 1
+      }
+    });
+
+  } catch (error) {
+    console.error("Error in getblogbycategory:", error);
+    res.status(500).json({ success: false, message: "Failed to get blog" });
+  }
+};
+
+
+
+export const showallblog = async (req, res) => {
+  try {
+    let total=Blog.countDocuments()
+    let page = parseInt(req.query.page) || 1;
+    let limit = parseInt(req.query.limit) || total ;
+
+    if (page < 1) page = 1;
+    if (limit < 1) limit = 10;
+
+    const skip = (page - 1) * limit;
+    const [blogs, totalBlogs] = await Promise.all([
+      Blog.find()
+        .populate("author", "name email avatar")
+        .populate("category", "name")
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit)
+        .lean(),
+      Blog.countDocuments()
+    ]);
+
+    const totalPages = Math.ceil(totalBlogs / limit);
+    const hasNextPage = page < totalPages;
+    const hasPrevPage = page > 1;
+
+    res.status(200).json({
+      success: true,
+      blogs,
+      pagination: {
+        totalBlogs,
+        totalPages,
+        currentPage: page,
+        hasNextPage,
+        hasPrevPage,
+      },
+    });
+  } catch (error) {
+    console.error("Error in showallblog:", error);
+    res.status(500).json({ success: false, message: "Error fetching blogs", error: error.message });
+  }
+};
+
+
 
 
   export const getblog = async (req, res) => {
     try {
         const { slug } = req.params;
+        
         if (!slug) {
             return res.status(400).json({ success: false, message: "Slug is required" });
         }
@@ -193,33 +268,6 @@ export const getrelatedblog = async (req, res) => {
       res.status(200).json({ success: true, blog });
     } catch (error) {
       console.error("Error in getrelatedblog:", error);
-      res.status(500).json({ success: false, message: "Failed to get blog" });
-    }
-  };
-  
-
-  export const getblogbycategory = async (req, res) => {
-    try {
-      // Use 'slug' from req.params
-      const { slug } = req.params;
-      
-      // Case-insensitive search for the category by slug
-      const categorydata = await Category.findOne({ slug: new RegExp(`^${slug}$`, "i") });
-      
-      if (!categorydata) {
-        return res.status(404).json({ success: false, message: "Category not found" });
-      }
-      
-      const categoryid = categorydata._id;
-      const blog = await Blog.find({ category: categoryid })
-        .populate("author", "name avatar")
-        .populate("category", "name slug")
-        .lean()
-        .exec();
-        
-      res.status(200).json({ success: true, blog });
-    } catch (error) {
-      console.error("Error in getblogbycategory:", error);
       res.status(500).json({ success: false, message: "Failed to get blog" });
     }
   };

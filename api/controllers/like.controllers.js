@@ -3,14 +3,16 @@ import Like from "../models/bloglike.model.js";
 
 export const dolike = async (req, res) => {
   const session = await mongoose.startSession();
+  session.startTransaction();
   try {
-    session.startTransaction();
     const { author, blogid } = req.body;
 
     // Execute the transactional operations directly
     let isuserlike;
     // First, attempt to delete an existing like.
-    const deletionResult = await Like.deleteOne({ author, blogid }).session(session);
+    const deletionResult = await Like.deleteOne({ author, blogid }).session(
+      session
+    );
     if (deletionResult.deletedCount === 1) {
       // A like existed and was removed.
       isuserlike = false;

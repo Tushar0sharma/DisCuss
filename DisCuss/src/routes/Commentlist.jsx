@@ -4,7 +4,7 @@ import { showToast } from "../helper/showToast";
 import { FaSpinner } from "react-icons/fa";
 import Deletebtn from "../components/Ui/Deletebtn";
 
-const Commentlist = ({ blogid, newcomment }) => {
+const Commentlist = ({ blogid, newcomment, onDeleteComment }) => {
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -71,6 +71,7 @@ const Commentlist = ({ blogid, newcomment }) => {
         prevComments.filter((comment) => comment._id !== commentid)
       );
       showToast("success", "Comment deleted successfully");
+      onDeleteComment(); // Call the function to update the comment count
     } catch (error) {
       console.error("Error deleting comment:", error);
       showToast("error", "Something went wrong while deleting comment");
@@ -135,7 +136,7 @@ const Commentlist = ({ blogid, newcomment }) => {
                     onClick={() => handleDelete(comment._id)}
                     className=" text-white font-semibold  px-5 rounded-lg transition mt-3 mr-4"
                   >
-                    <Deletebtn/>
+                    <Deletebtn />
                   </button>
                 )}
             </div>

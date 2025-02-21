@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FaRegComment } from "react-icons/fa";
-const Commentcount = ({ blogid }) => {
+const Commentcount = ({ blogid ,increase,decrease}) => {
   const [countData, setCountData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -27,15 +27,15 @@ const Commentcount = ({ blogid }) => {
     };
 
     fetchCount();
-  }, [blogid]);
+  }, [blogid,increase,decrease]);
 
-  if (loading) return <div>Loading count...</div>;
+  // if (loading) return <div>Loading count...</div>;
   if (error) return <div className="text-red-500">{error}</div>;
 
   return (
     <button className="flex items-center gap-1">
       <FaRegComment size={24} />
-      {countData && countData.cnt}
+      {loading ? 0 : countData.cnt}
     </button>
   );
 };

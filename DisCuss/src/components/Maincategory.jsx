@@ -11,9 +11,19 @@ const Maincategory = ({ onCategorySelect, selectedCategory }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [COLLAPSED_LIMIT,setCOLLAPSED_LIMIT] = useState(5);
 
   const navigate = useNavigate();
-  const COLLAPSED_LIMIT = 5;
+
+  useEffect(() => {
+    const updateLimit = () => {
+      setCOLLAPSED_LIMIT(window.innerWidth < 468 ? 3 : 5);
+    };
+
+    updateLimit(); // Set initial value
+    window.addEventListener("resize", updateLimit);
+    return () => window.removeEventListener("resize", updateLimit);
+  }, []);
 
   // Fetch categories
   useEffect(() => {
@@ -64,7 +74,7 @@ const Maincategory = ({ onCategorySelect, selectedCategory }) => {
       } bg-gray-800 p-4 shadow-lg rounded-xl items-center justify-center gap-1 md:gap-6`}
     >
       {/* Category Buttons */}
-      <div className="flex-1 flex items-center flex-wrap gap-4">
+      <div className="flex-1 flex items-center flex-wrap gap-3">
         <button
           onClick={() => onCategorySelect(null)}
           className={`bg-blue-700 text-white rounded-full px-4 py-2 transition-all hover:bg-blue-600 ${
