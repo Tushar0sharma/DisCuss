@@ -6,6 +6,7 @@ import Meteors from '../components/Magicui/Meteors';
 import { Particles } from '../components/Magicui/Particles';
 import { useState } from 'react';
 import Backtotop from '../components/Ui/Backtotop';
+import { useSelector } from 'react-redux';
 
 
 const Homepage = () => {
@@ -15,6 +16,9 @@ const Homepage = () => {
   const scrolltotop=()=>{
     window.scrollTo({top:0,behavior:"smooth"})
   }
+
+  const onlineUser=useSelector(state=>state.user.onlineUsers)
+  // console.log(onlineUser)
 
   useEffect(()=>{
     const handlescroll=()=>{
@@ -28,6 +32,7 @@ const Homepage = () => {
     window.addEventListener("scroll",handlescroll)
     return ()=>window.removeEventListener("scroll",handlescroll)
   });
+  
 
   // Called when a category is clicked in Maincategory.
   const handleCategorySelect = (categorySlug) => {

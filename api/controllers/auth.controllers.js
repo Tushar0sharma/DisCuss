@@ -54,7 +54,7 @@ export const login = async (req, res) => {
         const newuser=user.toObject({getters:true})
         delete newuser.password
 
-        res.status(200).json({ message: "Login successful", user: newuser,success:true });
+        res.status(200).json({ message: "Login successful",token, user: newuser,success:true });
 
 
     } catch (error) {
@@ -96,7 +96,7 @@ export const Googlelogin = async (req, res) => {
         const newuser=user.toObject({getters:true})
         delete newuser.password
 
-        res.status(200).json({ message: "Login successful", user: newuser,success:true });
+        res.status(200).json({ message: "Login successful",token, user: newuser,success:true });
 
 
     } catch (error) {

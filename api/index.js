@@ -1,5 +1,5 @@
 import express from "express";
-const app=express()
+// const app=express()
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import cors from "cors"
@@ -9,7 +9,10 @@ import userrouter from "./routes/user.routes.js";
 import categoryroute from "./routes/category.routes.js";
 import blogroutes from "./routes/blog.route.js";
 import commentroute from "./routes/comment.route.js";
+import messageRoute from "./routes/message.route.js"
 import likeroute from "./routes/likecount.route.js";
+import {app,server} from "./socket/socket.js";
+
 
 dotenv.config()
 const port=process.env.PORT
@@ -28,13 +31,14 @@ app.use('/api/category',categoryroute)
 app.use('/api/blog',blogroutes)
 app.use('/api/comment',commentroute)
 app.use('/api/like',likeroute)
+app.use("/api/message",messageRoute)
 
 
 mongoose.connect(process.env.MONGODB_CONN,{dbname:"DisCuss"})
 .then(()=>console.log("connected successfully"))
 .catch(err=> console.log(err))
 
-app.listen(port,()=>{
+server.listen(port,()=>{
     console.log("server is running on port ",port);
 })
 

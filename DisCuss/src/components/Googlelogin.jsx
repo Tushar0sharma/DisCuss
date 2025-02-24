@@ -1,5 +1,6 @@
 import { signInWithPopup } from 'firebase/auth'
 import React from 'react'
+import Cookies from "js-cookie"
 import {FcGoogle} from "react-icons/fc"
 import { auth, provider } from '../helper/firebase'
 import { showToast } from '../helper/showToast'
@@ -32,6 +33,7 @@ const Googlelogin = () => {
                 return
             }
             dispatch(setuser(data.user))
+            localStorage.setItem("token",data.token);
             navigate("/")
             showToast("success",data.message)
         }

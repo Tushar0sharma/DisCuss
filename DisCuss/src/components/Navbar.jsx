@@ -10,6 +10,8 @@ import { TbCategory } from "react-icons/tb";
 import { IoIosPeople } from "react-icons/io";
 import Loginbtn from "./Ui/Loginbtn";
 import { FaComments } from "react-icons/fa6";
+import { TbMessageDots } from "react-icons/tb";
+
 import Logobtn from "./Ui/Logobtn";
 
 const Navbar = () => {
@@ -85,6 +87,7 @@ const UserDropdown = () => {
         return;
       }
       dispatch(removeuser());
+      sessionStorage.removeItem("token");
       setIsOpen(false);
       showToast("success", data.message);
       navigate("/login");
@@ -95,6 +98,10 @@ const UserDropdown = () => {
 
   return (
     <div className="relative " ref={dropdownRef}>
+      <div className="flex flex-row gap-3">
+      <button className="animate-pulse" onClick={()=>(navigate("/chat"))}>
+      <TbMessageDots size={33}/>
+      </button>
       <button
         onClick={() => setIsOpen((prev) => !prev)}
         className="flex items-center gap-2 p-2 hover:bg-gray-600 rounded-full transition focus:outline-none"
@@ -107,6 +114,8 @@ const UserDropdown = () => {
           className="w-12 h-12 border-2 border-white rounded-full"
         />
       </button>
+
+      </div>
       {isOpen && (
         <div  style={{ backgroundColor: '#212121' }}  className="absolute right-0 mt-2 z-100 w-64 bg-gray-800 text-white border rounded-xl shadow-lg overflow-hidden ">
           <div className="px-4 py-2">
