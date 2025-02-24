@@ -33,7 +33,7 @@ const Googlelogin = () => {
                 return
             }
             dispatch(setuser(data.user))
-            localStorage.setItem("token",data.token);
+            sessionStorage.setItem("token",data.token);
             navigate("/")
             showToast("success",data.message)
         }
