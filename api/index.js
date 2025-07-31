@@ -62,7 +62,7 @@ cron.schedule('*/15 * * * *', async () => {
   console.log('⏰ Pinging backend every 15 minutes to keep it awake');
 
   try {
-    const response = await axios.get('https://expense-backend-7drs.onrender.com/api/ping');
+    const response = await axios.get('https://discuss-dwm1.onrender.com/api/category/all-category');
     console.log('✅ Backend pinged:', response.status);
   } catch (error) {
     console.error('❌ Failed to ping backend:', error.message);
