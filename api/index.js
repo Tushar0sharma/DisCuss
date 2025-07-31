@@ -12,6 +12,10 @@ import commentroute from "./routes/comment.route.js";
 import messageRoute from "./routes/message.route.js"
 import likeroute from "./routes/likecount.route.js";
 import {app,server} from "./socket/socket.js";
+import cron from "node-cron"
+import axios from "axios";
+
+
 
 
 dotenv.config()
@@ -53,3 +57,17 @@ app.use((err,req,res,next)=>{
         message
     })
 })
+
+cron.schedule('*/15 * * * *', async () => {
+  console.log('⏰ Pinging backend every 15 minutes to keep it awake');
+
+  try {
+    const response = await axios.get('https://expense-backend-7drs.onrender.com/api/ping');
+    console.log('✅ Backend pinged:', response.status);
+  } catch (error) {
+    console.error('❌ Failed to ping backend:', error.message);
+  }
+}, {
+  scheduled: true,
+  timezone: "Asia/Kolkata"
+});
